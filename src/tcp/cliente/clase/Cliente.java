@@ -24,7 +24,24 @@ public class Cliente {
         return respuesta;
     }
 
+    public static String leerRegistros(String nombre) {
+        try (Socket socket = new Socket(IP, PUERTO);
+             DataOutputStream dos = new DataOutputStream(socket.getOutputStream());
+             DataInputStream dis = new DataInputStream(socket.getInputStream())) {
 
+            dos.writeUTF("LEER");
+            dos.writeUTF(nombre);
 
-
+            String estado = dis.readUTF();
+            if (estado.equals("OK")) {
+                String registros = dis.readUTF();
+                return registros;
+            } else {
+                return "Error: " + estado;
+            }
+        } catch (IOException e) {
+            System.out.println("Error al conectar con el servidor: " + e.getMessage());
+        }
+        return "";
+    }
 }

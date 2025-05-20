@@ -10,7 +10,7 @@ public class Test {
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("Registro de Empleados");
-        frame.setSize(400, 300);
+        frame.setSize(500, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLayout(null);
 
@@ -41,9 +41,19 @@ public class Test {
         enviarBtn.setBounds(120, 110, 100, 30);
         frame.add(enviarBtn);
 
-        JLabel respuestaLabel = new JLabel("");
-        respuestaLabel.setBounds(30, 150, 340, 25);
-        frame.add(respuestaLabel);
+        JButton leerBtn = new JButton("Ver historial");
+        leerBtn.setBounds(230, 110, 100, 30);
+        frame.add(leerBtn);
+
+        JTextArea respuestaArea = new JTextArea();
+        respuestaArea.setBounds(30, 150, 440, 200);
+        respuestaArea.setEditable(false);
+        respuestaArea.setLineWrap(true);
+        respuestaArea.setWrapStyleWord(true);
+        respuestaArea.setBackground(frame.getBackground());
+        JScrollPane scrollPane = new JScrollPane(respuestaArea);
+        scrollPane.setBounds(30, 150, 440, 200);
+        frame.add(scrollPane);
 
         enviarBtn.addActionListener(new ActionListener() {
             @Override
@@ -58,7 +68,27 @@ public class Test {
 
                 try {
                     String respuesta = Cliente.enviarNombre(nombre, accion);
-                    respuestaLabel.setText("Servidor: " + respuesta);
+                    respuestaArea.setText("Servidor: " + respuesta);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(frame, "Error al enviar datos al servidor.", "Error", JOptionPane.ERROR_MESSAGE);
+                    ex.printStackTrace();
+                }
+            }
+        });
+
+        leerBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String nombre = nameField.getText();
+
+                if (nombre.isEmpty()) {
+                    JOptionPane.showMessageDialog(frame, "Por favor, ingrese su nombre.", "Error", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                try {
+                    String respuesta = Cliente.leerRegistros(nombre);
+                    respuestaArea.setText("Servidor: " + respuesta);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(frame, "Error al enviar datos al servidor.", "Error", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
