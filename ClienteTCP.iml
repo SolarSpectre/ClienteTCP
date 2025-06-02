@@ -7,11 +7,12 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="sqlite-jdbc-3.42.0.0" level="project" />
     <orderEntry type="library" name="lombok" level="project" />
     <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/src/lib/InterfaceRemota.jar!/" />
+          <root url="jar://$MODULE_DIR$/InterfaceRemota.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
